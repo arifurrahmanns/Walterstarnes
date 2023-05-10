@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="formDiv">
+        <form id="spinnerForm" novalidate action="">
+            <div class="top">McAfee</div>
+            <div>
+                <input type="text" name="fname" placeholder="Your first name" id="">
+            </div>
+            <div>
+                <input type="text" name="lname" placeholder="Your last name" id="">
+            </div>
+            <label class="idnty">
+                <input checked id="checkIdn" type="checkbox">
+                Check my Identity
+
+            </label>
+            <div class="wheel">
+                <canvas id="wheel" width="280" height="280"></canvas>
+                <img id="spinWheel"
+                    src="https://i.ibb.co/Lp18NYb/Pngtree-roulette-fortune-spinning-wheeal-flat-6400064.png" alt="">
+            </div>
+            <div style="display: none;" class="congratsTxt">
+                <p class="hd">Congratulations!</p>
+                <p class="txt prize"></p>
+            </div>
+            <input type="hidden" class="winItem" name="win">
+            <p class="disclaimer"><span>Disclaimer:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Consectetur,
+                magni.</p>
+
+            <button disabled class="submitBtn" type="submit">Next</button>
+        </form>
+    </div>
+
+
+
+
+
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"
+        integrity="sha512-cOH8ndwGgPo+K7pTvMrqYbmI8u8k6Sho3js0gOqVWTmQMlLIi6TbqGWRTpf1ga8ci9H3iPsvDLr4X7xwhC/+DQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script src="./Winwheel.min.js"></script>
+
+    <script>
+
+        $("#spinnerForm").validate(
+            {
+                rules: {
+                    fname: {
+                        required: '#checkIdn:checked'
+                    },
+                    lname: {
+                        required: '#checkIdn:checked'
+                    }
+                }
+            }
+        );
+
+        let theWheel = new Winwheel({
+            'canvasId': 'wheel',
+            'numSegments': 8,
+            'fillStyle': '#e7706f',
+            'lineWidth': 1,
+            'textFontSize': 12,
+            // 'responsive': true,
+            'innerRadius': 30,
+            // 'rotationAngle': -10,
+            'textAlignment': 'center',
+            'segments': [
+                { 'fillStyle': '#eae56f', 'text': '15% off' },
+                { 'fillStyle': '#89f26e', 'text': '20% off' },
+                { 'fillStyle': '#7de6ef', 'text': 'Free McAfee +' },
+                { 'fillStyle': '#e7706f', 'text': '10% off' },
+                { 'fillStyle': '#eae56f', 'text': '20% off' },
+                { 'fillStyle': '#89f26e', 'text': '15% off' },
+                { 'fillStyle': '#7de6ef', 'text': '50% off' },
+                { 'fillStyle': '#e7706f', 'text': '10% off' }
+            ],
+            'animation':                   // Note animation properties passed in constructor parameters.
+            {
+                'type': 'spinToStop',  // Type of animation.
+                'duration': 16,             // How long the animation is to take in seconds.
+                'spins': 10,            // The number of complete 360 degree rotations the wheel is to do.
+                'callbackFinished': alertPrize,  // Function to call whent the spinning has stopped.
+                'callbackSound': playSound,   // Called when the tick sound is to be played.
+                // 'soundTrigger': 'pin'        // Specify pins are to trigger the sound.
+            }
+        });
+
+        function alertPrize(indicatedSegment) {
+            // Display different message if win/lose/backrupt.
+            $(".congratsTxt").show();
+            $(".submitBtn").removeAttr("disabled");
+            $(".prize").text("You got " + indicatedSegment.text);
+            $(".winItem").val(indicatedSegment.text)
+            // resetWheel()
+        }
+
+        function resetWheel() {
+            theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
+            theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
+            theWheel.draw();                // Call draw to render changes to the wheel.
+
+        }
+
+
+        // Loads the tick audio sound in to an audio object.
+        let audio = new Audio('./tick.mp3');
+        function playSound() {
+
+            audio.pause();
+            audio.currentTime = 0;
+
+            audio.play();
+        }
+        let clicked = false;
+        $("#spinWheel").click(function () {
+            if (clicked) return;
+            theWheel.startAnimation();
+            clicked = true;
+        });
+
+    </script>
+</body>
+
+</html>
