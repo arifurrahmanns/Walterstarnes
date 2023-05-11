@@ -1,0 +1,15 @@
+<p class="voucherCode"></p>
+
+<script src="./voucher_codes.js"></script>
+<script>
+    const code = voucher_codes.generate({
+        pattern: "###-#####-####",
+        prefix: "MC-",
+        charset: voucher_codes.charset("alphanumeric")
+    });
+    console.log(code);
+    // $(".voucherCode").text(code);
+    // startSpin(); 
+
+
+</script>

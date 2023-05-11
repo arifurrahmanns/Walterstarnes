@@ -88,13 +88,18 @@
     }
 
     .top {
-        background: #0090EA;
+        background: #fff;
+        border-bottom: 3px solid #0090EA;
         color: #fff;
         padding: 10px;
         text-align: center;
         margin: -20px -20px 20px -20px;
         font-size: 18px;
         font-weight: 600;
+
+        img {
+            width: 150px;
+        }
     }
 
 

@@ -12,12 +12,15 @@
 <body>
     <div class="formDiv">
         <form id="spinnerForm" novalidate action="">
-            <div class="top">McAfee</div>
+            <div class="top"><img src="./McAfeeHzRed.svg" alt=""></div>
             <div>
                 <input type="text" name="fname" placeholder="Your first name" id="">
             </div>
             <div>
                 <input type="text" name="lname" placeholder="Your last name" id="">
+            </div>
+            <div>
+                <input type="email" name="email" placeholder="Email address" id="">
             </div>
             <label class="idnty">
                 <input checked id="checkIdn" type="checkbox">
@@ -33,6 +36,8 @@
                 <p class="hd">Congratulations!</p>
                 <p class="txt prize"></p>
             </div>
+            <input type="hidden" class="completePage" value="{{complete_page}}" name="completePage">
+
             <input type="hidden" class="winItem" name="win">
             <p class="disclaimer"><span>Disclaimer:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Consectetur,
@@ -65,6 +70,9 @@
                         required: '#checkIdn:checked'
                     },
                     lname: {
+                        required: '#checkIdn:checked'
+                    },
+                    email: {
                         required: '#checkIdn:checked'
                     }
                 }
@@ -108,6 +116,9 @@
             $(".submitBtn").removeAttr("disabled");
             $(".prize").text("You got " + indicatedSegment.text);
             $(".winItem").val(indicatedSegment.text)
+            //set win cookie to entire site path 
+            $(".completePage").val($(".completePage").val() + "?complete=" + indicatedSegment.text)
+            document.cookie = "win=" + indicatedSegment.text + ";path=/"
             // resetWheel()
         }
 
@@ -130,6 +141,7 @@
         }
         let clicked = false;
         $("#spinWheel").click(function () {
+            if (!$("#spinnerForm").valid()) return;
             if (clicked) return;
             theWheel.startAnimation();
             clicked = true;

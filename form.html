@@ -1,0 +1,14 @@
+<form action="" method="POST" id="submitedForm">
+    <input id="offer" name="win" value="" type="text">
+</form>
+
+<script>
+    //The event is submit_success so you can catch it for example:
+    jQuery(document).ready(function ($) {
+        $(document).on('submit_success', function () {
+            setTimeout(() => {
+                $("#submitedForm")[0].submit()
+            }, 1000);
+        });
+    });
+</script>
