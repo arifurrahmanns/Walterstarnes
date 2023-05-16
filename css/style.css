@@ -1,112 +1,105 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap");
 .formDiv {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   margin: 0 auto;
-  max-width: 350px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  max-width: 300px;
+  box-sizing: border-box;
   overflow: hidden;
   background: #ffffff;
   padding: 20px;
   border-radius: 10px;
-  -webkit-box-shadow: 1px 1px 10px #dddddd44;
-          box-shadow: 1px 1px 10px #dddddd44;
+  box-shadow: 1px 1px 10px rgba(221, 221, 221, 0.2666666667);
   border: 1px solid #ebebeb;
 }
-
 .formDiv .wheel {
   background: url("https://i.ibb.co/V2T5zvz/Pngtree-roulette-fortune-spinning-wheel-flat-6400064.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  width: 280px;
-  display: -ms-grid;
+  width: 240px;
   display: grid;
-  height: 280px;
+  height: 240px;
   place-content: center;
   position: relative;
   margin: 20px auto;
 }
-
 .formDiv .wheel #spinWheel {
   display: block;
   position: absolute;
   width: 30%;
   left: 50%;
-  -webkit-transform: translate(-50%, -60%);
-          transform: translate(-50%, -60%);
+  transform: translate(-50%, -60%);
   top: 50%;
   cursor: pointer;
-  -webkit-transition: .2s ease-in-out;
-  transition: .2s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
-
 .formDiv .wheel #spinWheel:hover {
-  -webkit-transform: translate(-50%, -60%) scale(1.05);
-          transform: translate(-50%, -60%) scale(1.05);
+  transform: translate(-50%, -60%) scale(1.05);
 }
-
 .formDiv .congratsTxt {
   text-align: center;
   margin-bottom: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6549019608);
+  z-index: 99;
+  display: grid;
+  place-content: center;
 }
-
+.formDiv .congratsTxt.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+.formDiv .congratsTxt .inner {
+  background: transparent;
+  width: 250px;
+  position: relative;
+}
+.formDiv .congratsTxt .inner .prize {
+  position: absolute;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAAChCAYAAABef9MSAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDcuMS1jMDAwIDc5LjljY2M0ZGU5MywgMjAyMi8wMy8xNC0xNDowNzoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIzLjMgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NkNBMzU0QzNFMUI1MTFFQ0I2NDNENzBBMEU2RjdDRTIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NkNBMzU0QzRFMUI1MTFFQ0I2NDNENzBBMEU2RjdDRTIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo2Q0EzNTRDMUUxQjUxMUVDQjY0M0Q3MEEwRTZGN0NFMiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo2Q0EzNTRDMkUxQjUxMUVDQjY0M0Q3MEEwRTZGN0NFMiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Piv+geAAAAWQSURBVHja7N3Pi5R1HMDx76p4WlO0FH8k1FWjIikkf5QG4VHDhersocJA0I4VXf0Loq4KJdnRg6ZmohRmB5G6CaEFlqDlxUWbPl+ex1gkdXedeb6z+3294HMRm3Hn076ZZ+aZZ0Z6vV4qbH7MrQTUZqTUHc8Zgh9+1P6hSsV+94chfAvsH6q0qObwLbN/qNKKmsP3lP1DlYr97g9D+NbYP1Rpbc3hW2f/UKUXSt3xSOHTWebG/JkKvsgJFHMjZknMndqe8a0XPajWwrYB1R3qvmH3ULUiDSh5qDsv5krMUruHal2NWRlzu5ZnfK+LHlRvaduCag51P7BzoEQLSoVvQ8wm+wbaFmyoIXwf2TUwwcezPXzbY16zZ2CCrW0bOtH1u7r5nL0LMavsGbjH5ZhnYq7Ptmd8n4oecB+r2kbMqkPdd2LG7BZ4gLG2FbPiUDe/a3M0NZeZB3iQ8dSc23dyJocvH7OfSM2HkQEm41rMq6l5T2DGHerm6B0TPWCKlrTteG6mhW9j+1TVx9KA6cjt+LZ95jcjwvdual7TW2x3wCN4LOZIzHv9vNF+v8aX/5Gfx+y0L6DPDsXsSs0FTIfmGd+bMb+IHjAguS0/x7w1DOF7OeZ4zMGY5XYDDFBuzIHUnCky7QsbTPdQNwdzW8y+mM12ARSS3/zYn5rXAf8ZRPjyFwO9GLMjNWdXr/aYA0Pi15gvYw7H/JAe8gVGOXz5S33zh4Jvtn82mpqLCTyemi/8zefi5a+AzF8KstDjCwy5/ObH2ZhzqTkB+lJqvs3xv87l8PU8TkBN5ngIAOEDED4A4QMQPgDhAxA+AOEDED4A4QMQPgDhAxA+AOEDED4A4QOED0D4AIQPQPgAhA9A+ACED0D4AIQPQPgAhA9A+ACED0D4AIQPED4A4QMQPgDhAxA+AOEDED4A4QMQPgDhAxA+AOEDED4A4QMQPkD4AIQPQPgAhA9A+ACED0D4AIQPQPgAhA9A+ACED0D4AIQPQPgA4QMQPgDhAxA+AOEDED4A4QMQPgDhAxA+AOEDED4A4QMQPgDhA4QPQPgAhA9A+ACED0D4AIQPQPgAhA9A+ACED0D4AIQPQPgAhA9A+ADhAxA+AOEDED6AGWVezJMx12Nutn82GrMoZkXM0zFrYtbFrI9Z6CEDhtyNmLMx52IuxlyKuTKxcyO9Xm+yNzY35qWYHTE7Y1Z7fIEhcTnmi5jDMd/H3HnQX55K+O6N4LaYvTGbPeZAIadi9scceVjs+hG+iTbGfBLzih0AHTkZ82HMd9P5j/sRvrvebsu73E6AAfk9Zl/MgUe5kX6GL8tvfnyWmtcAAfrpUMyu1Lx58Uj6fTpL/geNxeyOuWVPQB+Mt00Z60f0BvGMb6JNMV/HLLY3YJr+jtke800/b3SQ4cuejTka84T9AVP0R2rOHvmx3zc86PBlz8ecSE5+BiYvH9JuiTk/iBvv4iNrP6XmpOdxuwQmYbxtxvlB3UFXn9U9HrPHPoFJ2NM2Y2C6ONSdKH+kZMxegfs41EUjug5fvvjBhZhV9gvcI19IYG1qLiYwUF1flir/QO/bL/A/dncRvRLP+O46FrPVnoFWPvNjS1d3Vip8G9I0P1wMzEr5Yienu7qzUldgzj/gKbsG2hac7vIOS156fr99AyVaUOpQN8uXvc/v4iy1d6jW1ZiVMbdrecaXf9CD9g5VO9h19EqHL/vK3qFqRRpQ8lA3y9/dcS25gAHUKF+IYEmawndlzJZnfPkHPmP/UKUzJaI3DOHLztk/VOl8qTsehvBdtH+o0oWaw3fJ/qFKxX73hyF8V+wfqvRbzeH7y/6hStdL3XHp01nu6vl/AKozUvMzvvn2D9QWvlFrgCoV+90fhvAtsH+o0qKaw7fM/qFKK0rd8b8CDAAVpeY78UrciAAAAABJRU5ErkJggg==) no-repeat;
+  background-size: 100% 100%;
+  background-position: 50%;
+  padding: 20px 15px;
+  color: #2b2b2b;
+  width: 130px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  display: block;
+  font-size: 15px;
+  transform-origin: center;
+}
+.formDiv .congratsTxt .inner img {
+  width: 100%;
+}
 .formDiv .congratsTxt .hd {
   text-align: center;
   font-weight: 600;
   font-size: 18px;
   margin: 0;
 }
-
 .formDiv .congratsTxt .txt {
   margin-top: 5px;
   font-weight: 600;
   color: #0090EA;
 }
-
-.formDiv .congratsTxt .txt {
-  -webkit-animation: glow .5s ease-in-out infinite alternate;
-          animation: glow .5s ease-in-out infinite alternate;
-}
-
-@-webkit-keyframes glow {
-  0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  100% {
-    -webkit-transform: scale(1.1);
-            transform: scale(1.1);
-  }
-}
-
-@keyframes glow {
-  0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  100% {
-    -webkit-transform: scale(1.1);
-            transform: scale(1.1);
-  }
-}
-
 .formDiv .error {
   color: red;
   font-size: 11px;
   margin-top: 3px;
 }
-
 .formDiv .disclaimer {
   font-size: 13px;
 }
-
 .formDiv .disclaimer span {
   color: #0090EA;
   font-weight: 600;
   line-height: 1.4;
 }
-
 .formDiv .top {
   background: #fff;
   border-bottom: 3px solid #0090EA;
@@ -117,11 +110,9 @@
   font-size: 18px;
   font-weight: 600;
 }
-
 .formDiv .top img {
   width: 150px;
 }
-
 .formDiv .submitBtn {
   background: #F08051;
   text-align: center;
@@ -129,75 +120,78 @@
   font-size: 15px;
   text-align: center;
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   border: 0;
-  border-radius: 5px;
+  border-radius: 0;
   font-family: inherit;
   text-transform: uppercase;
   font-weight: 600;
   display: block;
   margin-top: 10px;
   cursor: pointer;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  width: 100px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin: 0 auto;
+  margin-top: -20px;
+  position: relative;
+  transition: 0.2s ease;
 }
-
+.formDiv .submitBtn svg {
+  background: #fff;
+  color: #C01818;
+  border-radius: 10px;
+}
 .formDiv .submitBtn:hover {
-  -webkit-transform: translateY(-2px);
-          transform: translateY(-2px);
+  transform: scale(1.05);
 }
-
 .formDiv .submitBtn {
-  background: #0090EA;
+  background: #C01818;
 }
-
+.formDiv .submitBtn svg {
+  width: 20px;
+}
 .formDiv .submitBtn:disabled {
   opacity: 0.3;
   cursor: not-allowed;
 }
-
 .formDiv canvas {
-  width: 250px;
+  width: 220px;
   display: block;
   margin: 0 auto;
 }
-
-.formDiv input:not([type="checkbox"]) {
+.formDiv input:not([type=checkbox]) {
   width: 100%;
   height: 100%;
   padding: 12px;
   height: auto;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   border: none;
   font-family: inherit;
   margin-top: 5px;
   border-radius: 5px;
-  font-size: 15px;
+  font-size: 14px;
   outline: none;
   background: #f7f7f7;
 }
-
-.formDiv input[type="checkbox"] {
+.formDiv input[type=checkbox] {
   width: 15px;
   height: 15px;
   margin-right: 10px;
   background: #fff;
 }
-
 .formDiv .idnty {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   font-size: 15px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   margin-top: 10px;
   -webkit-user-select: none;
      -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
   margin-bottom: 20px;
-}
-/*# sourceMappingURL=style.css.map */
+  font-size: 14px;
+}/*# sourceMappingURL=style.css.map */

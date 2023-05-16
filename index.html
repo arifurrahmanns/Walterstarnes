@@ -11,8 +11,8 @@
 
 <body>
     <div class="formDiv">
-        <form id="spinnerForm" novalidate action="">
-            <div class="top"><img src="./McAfeeHzRed.svg" alt=""></div>
+        <form id="spinnerForm" method="POST" novalidate action="{{calback_page}}">
+
             <div>
                 <input type="text" name="fname" placeholder="Your first name" id="">
             </div>
@@ -20,33 +20,39 @@
                 <input type="text" name="lname" placeholder="Your last name" id="">
             </div>
             <div>
-                <input type="email" name="email" placeholder="Email address" id="">
+                <input type="email" name="email_address" placeholder="Email address" id="">
             </div>
             <label class="idnty">
                 <input checked id="checkIdn" type="checkbox">
                 Check my Identity
-
             </label>
             <div class="wheel">
-                <canvas id="wheel" width="280" height="280"></canvas>
+                <canvas id="wheel" width="250" height="250"></canvas>
                 <img id="spinWheel"
                     src="https://i.ibb.co/Lp18NYb/Pngtree-roulette-fortune-spinning-wheeal-flat-6400064.png" alt="">
             </div>
-            <div style="display: none;" class="congratsTxt">
-                <p class="hd">Congratulations!</p>
-                <p class="txt prize"></p>
-            </div>
-            <input type="hidden" class="completePage" value="{{complete_page}}" name="completePage">
 
             <input type="hidden" class="winItem" name="win">
-            <p class="disclaimer"><span>Disclaimer:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Consectetur,
-                magni.</p>
 
-            <button disabled class="submitBtn" type="submit">Next</button>
+            <input type="hidden" class="completePage" value="{{complete_page}}" name="completePage">
+
+            <div class="congratsTxt hidden">
+
+                <div class="inner">
+                    <img src="./congrats.png" alt="">
+
+                    <p class="txt prize">You got 20% off</p>
+                    <button class="submitBtn" type="submit"><span>Next </span><svg xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </form>
-    </div>
 
+
+    </div>
 
 
 
@@ -63,90 +69,93 @@
 
     <script>
 
-        $("#spinnerForm").validate(
-            {
-                rules: {
-                    fname: {
-                        required: '#checkIdn:checked'
-                    },
-                    lname: {
-                        required: '#checkIdn:checked'
-                    },
-                    email: {
-                        required: '#checkIdn:checked'
+        jQuery(document).ready(function ($) {
+            $("#spinnerForm").validate(
+                {
+                    rules: {
+                        fname: {
+                            required: '#checkIdn:checked'
+                        },
+                        lname: {
+                            required: '#checkIdn:checked'
+                        },
+                        email_address: {
+                            required: '#checkIdn:checked'
+                        }
                     }
                 }
+            );
+
+            let theWheel = new Winwheel({
+                'canvasId': 'wheel',
+                'numSegments': 8,
+                'fillStyle': '#e7706f',
+                'lineWidth': 1,
+                'textFontSize': 12,
+                // 'responsive': true,
+                'innerRadius': 30,
+                // 'rotationAngle': -10,
+                'textAlignment': 'center',
+                'segments': [
+                    { 'fillStyle': '#eae56f', 'text': '15% off' },
+                    { 'fillStyle': '#89f26e', 'text': '20% off' },
+                    { 'fillStyle': '#7de6ef', 'text': 'Free McAfee +' },
+                    { 'fillStyle': '#e7706f', 'text': '10% off' },
+                    { 'fillStyle': '#eae56f', 'text': '20% off' },
+                    { 'fillStyle': '#89f26e', 'text': '15% off' },
+                    { 'fillStyle': '#7de6ef', 'text': '50% off' },
+                    { 'fillStyle': '#e7706f', 'text': '10% off' }
+                ],
+                'animation':                   // Note animation properties passed in constructor parameters.
+                {
+                    'type': 'spinToStop',  // Type of animation.
+                    'duration': 5,
+                    'spins': 8,       // The number of complete 360 degree rotations the wheel is to do.
+                    'callbackFinished': alertPrize,  // Function to call whent the spinning has stopped.
+                    'callbackSound': playSound,   // Called when the tick sound is to be played.
+                    // 'soundTrigger': 'pin'        // Specify pins are to trigger the sound.
+                }
+            });
+
+            function alertPrize(indicatedSegment) {
+                // Display different message if win/lose/backrupt.
+                $(".congratsTxt").removeClass("hidden");
+                $(".submitBtn").removeAttr("disabled");
+                $(".prize").text("You got " + indicatedSegment.text);
+                $(".winItem").val(indicatedSegment.text)
+                $(".completePage").val($(".completePage").val() + "?complete=" + indicatedSegment.text)
+
+                document.cookie = "win=" + indicatedSegment.text + ";path=/"
+                // resetWheel()
             }
-        );
 
-        let theWheel = new Winwheel({
-            'canvasId': 'wheel',
-            'numSegments': 8,
-            'fillStyle': '#e7706f',
-            'lineWidth': 1,
-            'textFontSize': 12,
-            // 'responsive': true,
-            'innerRadius': 30,
-            // 'rotationAngle': -10,
-            'textAlignment': 'center',
-            'segments': [
-                { 'fillStyle': '#eae56f', 'text': '15% off' },
-                { 'fillStyle': '#89f26e', 'text': '20% off' },
-                { 'fillStyle': '#7de6ef', 'text': 'Free McAfee +' },
-                { 'fillStyle': '#e7706f', 'text': '10% off' },
-                { 'fillStyle': '#eae56f', 'text': '20% off' },
-                { 'fillStyle': '#89f26e', 'text': '15% off' },
-                { 'fillStyle': '#7de6ef', 'text': '50% off' },
-                { 'fillStyle': '#e7706f', 'text': '10% off' }
-            ],
-            'animation':                   // Note animation properties passed in constructor parameters.
-            {
-                'type': 'spinToStop',  // Type of animation.
-                'duration': 5,
-                'spins': 8,           // The number of complete 360 degree rotations the wheel is to do.
-                'callbackFinished': alertPrize,  // Function to call whent the spinning has stopped.
-                'callbackSound': playSound,   // Called when the tick sound is to be played.
-                // 'soundTrigger': 'pin'        // Specify pins are to trigger the sound.
+            function resetWheel() {
+                theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
+                theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
+                theWheel.draw();                // Call draw to render changes to the wheel.
+
+
             }
-        });
-
-        function alertPrize(indicatedSegment) {
-            // Display different message if win/lose/backrupt.
-            $(".congratsTxt").show();
-            $(".submitBtn").removeAttr("disabled");
-            $(".prize").text("You got " + indicatedSegment.text);
-            $(".winItem").val(indicatedSegment.text)
-            //set win cookie to entire site path 
-            $(".completePage").val($(".completePage").val() + "?complete=" + indicatedSegment.text)
-            document.cookie = "win=" + indicatedSegment.text + ";path=/"
-            // resetWheel()
-        }
-
-        function resetWheel() {
-            theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
-            theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
-            theWheel.draw();                // Call draw to render changes to the wheel.
-
-        }
 
 
-        // Loads the tick audio sound in to an audio object.
-        let audio = new Audio('./tick.mp3');
-        function playSound() {
+            // Loads the tick audio sound in to an audio object.
+            let audio = new Audio('https://abrio.us/wp-content/uploads/ac_assets/tick.mp3');
+            function playSound() {
 
-            audio.pause();
-            audio.currentTime = 0;
+                audio.pause();
+                audio.currentTime = 0;
 
-            audio.play();
-        }
-        let clicked = false;
-        $("#spinWheel").click(function () {
-            if (!$("#spinnerForm").valid()) return;
-            if (clicked) return;
-            theWheel.startAnimation();
-            clicked = true;
-        });
+                audio.play();
+            }
+            let clicked = false;
+            $("#spinWheel").click(function () {
+                if (!$("#spinnerForm").valid()) return;
+                if (clicked) return;
+                theWheel.startAnimation();
+                clicked = true;
+            });
 
+        })
     </script>
 </body>
 
